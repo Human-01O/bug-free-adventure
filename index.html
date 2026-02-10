@@ -2,7 +2,11 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Ngọc Lii </title>
+
+<!-- ✅ FIX MOBILE -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Happy Birthday Ngọc Lii</title>
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -85,6 +89,29 @@ canvas {
         0 0 28px rgba(255,140,70,0.6),
         0 0 50px rgba(255,110,40,0.45);
 }
+
+/* ===== MOBILE LANDSCAPE ===== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .image-box {
+        padding-left: 8vw;
+    }
+
+    .image-shadow img {
+        width: min(60vw, 260px);
+    }
+
+    .birthday-text {
+        right: 4vw;
+        top: 6vh;
+        bottom: 6vh;
+    }
+
+    .birthday-text p {
+        font-size: clamp(14px, 2.6vw, 20px);
+        line-height: 1.5;
+    }
+}
 </style>
 </head>
 
@@ -111,7 +138,7 @@ nhưng đây là món quà về mặt
 tinh thần và đầy ý nghĩa.
 
 Chúc bạn có ngày sinh nhật
-thật vui vẻ,bên gia đình, bạn bè
+thật vui vẻ, bên gia đình, bạn bè
 và ngày càng xinh nha! 💖
     </p>
 </div>
@@ -193,6 +220,3 @@ animate();
 
 </body>
 </html>
-
-
-
