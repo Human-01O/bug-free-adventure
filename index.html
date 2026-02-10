@@ -14,12 +14,14 @@ html, body {
     background: radial-gradient(circle at center, #5a2a12, #0e0601f5);
 }
 
+/* ===== CANVAS ===== */
 canvas {
     position: fixed;
     inset: 0;
     z-index: 1;
 }
 
+/* ===== IMAGE ===== */
 .image-box {
     position: fixed;
     inset: 0;
@@ -57,6 +59,7 @@ canvas {
     100% { transform: translateY(120vh); opacity: 0; }
 }
 
+/* ===== TEXT ===== */
 .birthday-text {
     position: fixed;
     right: 10vw;
@@ -108,17 +111,12 @@ nhưng đây là món quà về mặt
 tinh thần và đầy ý nghĩa.
 
 Chúc bạn có ngày sinh nhật
-thật vui vẻ, bên gia đình, bạn bè
+thật vui vẻ,bên gia đình, bạn bè
 và ngày càng xinh nha! 💖
     </p>
 </div>
 
 <script>
-/* ===== DEVICE CHECK ===== */
-const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
-const TARGET_FPS = isMobile ? 30 : 60;
-const FRAME_TIME = 1000 / TARGET_FPS;
-
 /* ===== CANVAS ===== */
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -128,20 +126,17 @@ function resize() {
     canvas.height = innerHeight;
 }
 resize();
-window.addEventListener("resize", resize);
+addEventListener("resize", resize);
 
 /* ===== PARTICLES ===== */
-const COUNT = isMobile
-    ? Math.min(350, innerWidth * 0.25)
-    : Math.min(800, innerWidth * 0.5);
-
+const COUNT = Math.min(800, innerWidth * 0.5);
 const particles = [];
 
 for (let i = 0; i < COUNT; i++) {
     particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        r: Math.random() < 0.9 ? 1 : 2,
+        r: Math.random() < 0.85 ? 1 : 2,
         vy: Math.random() * 0.6 + 0.4,
         vx: Math.random() * 0.3 - 0.15,
         a: Math.random() * 0.5 + 0.4
@@ -157,26 +152,17 @@ let ti = 0;
 function typeText() {
     if (ti < fullText.length) {
         textEl.innerHTML += fullText[ti++];
-        setTimeout(typeText, isMobile ? 60 : 45);
+        setTimeout(typeText, 45);
     }
 }
 setTimeout(typeText, 5000);
 
 /* ===== LOOP ===== */
-let last = 0;
-function animate(t) {
-    if (t - last < FRAME_TIME) {
-        requestAnimationFrame(animate);
-        return;
-    }
-    last = t;
-
+function animate() {
     ctx.fillStyle = "rgba(0,0,0,0.25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-
+    for (const p of particles) {
         p.y -= p.vy;
         p.x += Math.sin(p.y * 0.02) * p.vx;
 
@@ -186,12 +172,11 @@ function animate(t) {
         }
 
         ctx.globalAlpha = p.a;
-
         if (p.r === 1) {
             ctx.fillStyle = "#ffdcb0";
             ctx.fillRect(p.x, p.y, 1.2, 1.2);
         } else {
-            ctx.shadowBlur = isMobile ? 3 : 6;
+            ctx.shadowBlur = 6;
             ctx.shadowColor = "rgba(255,170,90,0.6)";
             ctx.beginPath();
             ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
@@ -203,7 +188,7 @@ function animate(t) {
     ctx.globalAlpha = 1;
     requestAnimationFrame(animate);
 }
-requestAnimationFrame(animate);
+animate();
 </script>
 
 </body>
