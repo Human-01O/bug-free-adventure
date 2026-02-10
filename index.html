@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Ngoc Lii</title>
+<title>Birthday Glow</title>
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -107,7 +107,7 @@ nhưng tôi cảm thấy mến bạn.
 
 Nhân dịp sinh nhật bạn,
 tôi không có món quà gì đặc biệt,
-nhưng đây cũng là món quà về mặt 
+nhưng đây là món quà về mặt 
 tinh thần và đầy ý nghĩa.
 
 Chúc bạn có ngày sinh nhật
@@ -130,39 +130,45 @@ addEventListener("resize", resize);
 
 /* ===== PARTICLES ===== */
 const COUNT = Math.min(800, innerWidth * 0.5);
-const particles = [];
+const particles = new Array(COUNT);
 
 for (let i = 0; i < COUNT; i++) {
-    particles.push({
+    particles[i] = {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         r: Math.random() < 0.85 ? 1 : 2,
         vy: Math.random() * 0.6 + 0.4,
         vx: Math.random() * 0.3 - 0.15,
         a: Math.random() * 0.5 + 0.4
-    });
+    };
 }
 
 /* ===== TYPEWRITER ===== */
 const textEl = document.getElementById("text");
 const fullText = textEl.innerHTML.trim();
-textEl.innerHTML = "";
+textEl.textContent = "";
 
 let ti = 0;
 function typeText() {
     if (ti < fullText.length) {
-        textEl.innerHTML += fullText[ti++];
+        textEl.textContent += fullText.charAt(ti++);
         setTimeout(typeText, 45);
     }
 }
 setTimeout(typeText, 5000);
 
 /* ===== LOOP ===== */
+ctx.fillStyle = "#ffdcb0";
+ctx.shadowColor = "rgba(255,170,90,0.6)";
+
 function animate() {
+    ctx.globalAlpha = 0.25;
     ctx.fillStyle = "rgba(0,0,0,0.25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (const p of particles) {
+    for (let i = 0; i < COUNT; i++) {
+        const p = particles[i];
+
         p.y -= p.vy;
         p.x += Math.sin(p.y * 0.02) * p.vx;
 
@@ -172,19 +178,18 @@ function animate() {
         }
 
         ctx.globalAlpha = p.a;
+
         if (p.r === 1) {
-            ctx.fillStyle = "#ffdcb0";
             ctx.fillRect(p.x, p.y, 1.2, 1.2);
         } else {
             ctx.shadowBlur = 6;
-            ctx.shadowColor = "rgba(255,170,90,0.6)";
             ctx.beginPath();
             ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
             ctx.fill();
-            ctx.shadowBlur = 0;
         }
     }
 
+    ctx.shadowBlur = 0;
     ctx.globalAlpha = 1;
     requestAnimationFrame(animate);
 }
